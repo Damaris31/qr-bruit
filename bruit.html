@@ -2,16 +2,87 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>Vous m'avez scanné!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      background: black;
+      color: white;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    button {
+      font-size: 24px;
+      padding: 20px;
+      margin-top: 40px;
+      cursor: pointer;
+    }
+
+    p {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    #message-fin {
+      display: none;
+      color: white;
+      font-size: 18px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
-<body style="margin:0; background:black; display:flex; justify-content:center; align-items:center; height:100vh;">
+<body>
 
-<audio autoplay loop>
-  <source src="https://www.myinstants.com/fr/instant/fart-button.mp3" type="audio/mpeg">
-</audio>
+  <h1></h1>
+  
 
-<h1 style="color:white; font-size:3em;">IL NE FAUT PAS SCANNER SANS SAVOIR !😈</h1>
+  <button id="btn" onclick="declencherAlerte()">Continuer</button>
+
+  <audio id="alarme" loop playsinline>
+    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+  </audio>
+  <div id="message-fin">
+    <h2>Vous avez scannez un QR code inconnu</h2>
+    <p>
+    Si ce QR code avait été malveillant, il aurait pu :
+    <br>• vous rediriger vers un site de phishing  
+    <br>• collecter des informations personnelles  
+    <br>• vous inciter à installer un logiciel malveillant
+    </p>
+    <p>
+    👉 <strong>Ne scannez jamais un QR code dont vous ne connaissez pas la source.</strong>
+    </p>
+  </div>
+  
+  <script>
+    function declencherAlerte() {
+      const audio = document.getElementById("alarme");
+      const messageFin = document.getElementById("message-fin");
+      const bouton = document.getElementById("btn");
+
+     bouton.style.display = "none";
+
+      audio.volume = 1.0;
+      audio.play();
+
+      if (navigator.vibrate) {
+        navigator.vibrate([500, 500, 500, 500]);
+      }
+
+      if (document.body.requestFullscreen) {
+        document.body.requestFullscreen();
+      }
+
+      setTimeout(() => {
+        audio.pause();
+        audio.currentTime = 0;
+        messageFin.style.display = "block";
+      }, 10000);
+    }
+  </script>
 
 </body>
-</html>
-
+</html> 

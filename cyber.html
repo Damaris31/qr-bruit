@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Test Cybersécurité</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  background: black;
+  color: red;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+button {
+  font-size: 24px;
+  padding: 20px;
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<h1>⚠️ Test de cybersécurité</h1>
+<p>Vous avez scanné un QR code inconnu.</p>
+
+<button onclick="declencherAlerte()">Continuer</button>
+
+<audio id="alarme" loop>
+  <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg">
+</audio>
+
+<script>
+function declencherAlerte() {
+  const audio = document.getElementById("alarme");
+  audio.volume = 1.0;
+  audio.play();
+
+  if (navigator.vibrate) {
+    navigator.vibrate([500, 500, 500, 500]);
+  }
+
+  document.body.requestFullscreen?.();
+}
+</script>
+
+</body>
+</html>

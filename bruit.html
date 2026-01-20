@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Vous m'avez scanné!</title>
+  <title>Vous m'avez scanné !</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -14,10 +14,18 @@
       padding: 20px;
     }
 
+    input {
+      font-size: 18px;
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+      max-width: 300px;
+    }
+
     button {
       font-size: 24px;
       padding: 20px;
-      margin-top: 40px;
+      margin-top: 30px;
       cursor: pointer;
     }
 
@@ -36,34 +44,54 @@
 </head>
 <body>
 
-  <h1></h1>
-  
+  <h1>Avant de continuer…</h1>
 
+  <input type="text" id="prenom" placeholder="Prénom">
+  <br>
+  <input type="text" id="nom" placeholder="Nom">
+
+  <br>
   <button id="btn" onclick="declencherAlerte()">Continuer</button>
 
   <audio id="alarme" loop playsinline>
     <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
   </audio>
+
   <div id="message-fin">
-    <h2>Vous avez scannez un QR code inconnu</h2>
+    <h2 id="message-nom"></h2>
     <p>
-    Si ce QR code avait été malveillant, il aurait pu :
-    <br>• vous rediriger vers un site de phishing  
-    <br>• collecter des informations personnelles  
-    <br>• vous inciter à installer un logiciel malveillant
+      Vous avez scanné un QR code inconnu.
+      <br><br>
+      Si ce QR code avait été malveillant, il aurait pu :
+      <br>• vous rediriger vers un site de phishing  
+      <br>• collecter des informations personnelles  
+      <br>• vous inciter à installer un logiciel malveillant
     </p>
     <p>
-    👉 <strong>Ne scannez jamais un QR code dont vous ne connaissez pas la source.</strong>
+      👉 <strong>Ne scannez jamais un QR code dont vous ne connaissez pas la source.</strong>
     </p>
   </div>
-  
+
   <script>
     function declencherAlerte() {
+      const prenom = document.getElementById("prenom").value.trim();
+      const nom = document.getElementById("nom").value.trim();
+
+      if (!prenom || !nom) {
+        alert("Veuillez entrer votre prénom et votre nom.");
+        return;
+      }
+
       const audio = document.getElementById("alarme");
       const messageFin = document.getElementById("message-fin");
       const bouton = document.getElementById("btn");
+      const messageNom = document.getElementById("message-nom");
 
-     bouton.style.display = "none";
+      bouton.style.display = "none";
+      document.getElementById("prenom").style.display = "none";
+      document.getElementById("nom").style.display = "none";
+
+      messageNom.textContent = prenom + " " + nom + ", ceci est un message de prévention.";
 
       audio.volume = 1.0;
       audio.play();
@@ -85,4 +113,4 @@
   </script>
 
 </body>
-</html> 
+</html>

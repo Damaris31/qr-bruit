@@ -7,7 +7,7 @@
 
   <style>
     body {
-      background-image: url(""https://drive.google.com/thumbnail?id=1tKNxBL0gDjJAsQXMrjyzYp-6gPDcBG6d&sz=w2000");
+      background-image: url("https://drive.google.com/thumbnail?id=1tKNxBL0gDjJAsQXMrjyzYp-6gPDcBG6d&sz=w2000");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -42,13 +42,10 @@
 <body>
 
   <h1>Cliquez sur "Continuer"</h1>
-  <input type="text" id="prenom" placeholder="Prénom">
-  <br>
-  <input type="text" id="nom" placeholder="Nom">
-  </br>
-  <br>
-  <input type="email" id="email" placeholder="Email">
-  </br>
+
+  <input type="text" id="prenom" placeholder="Prénom"><br>
+  <input type="text" id="nom" placeholder="Nom"><br>
+  <input type="email" id="email" placeholder="Email"><br>
 
   <button id="btn" onclick="declencherAlerte()">Continuer</button>
 
@@ -57,19 +54,19 @@
   </audio>
 
   <div id="message-fin">
-    <h2>Vous avez scannez un QR code inconnu</h2>
+    <h2>Vous avez scanné un QR code inconnu</h2>
     <p>
       Si ce QR code avait été malveillant, il aurait pu :
       <br>• vous rediriger vers un site de phishing  
       <br>• collecter des informations personnelles  
-      <br>• vous inciter à installer un logiciel malveillant
-      <br>• pirater votre boîte mail avec l'email inscrite      
+      <br>• vous inciter à installer un logiciel malveillant  
+      <br>• pirater votre boîte mail avec l’email inscrit
     </p>
     <p>
       👉 <strong>Ne scannez jamais un QR code dont vous ne connaissez pas la source.</strong>
     </p>
   </div>
-  
+
   <script>
     function declencherAlerte() {
       const audio = document.getElementById("alarme");
@@ -78,7 +75,6 @@
 
       bouton.style.display = "none";
 
-      audio.volume = 1.0;
       audio.play();
 
       if (navigator.vibrate) {
@@ -99,5 +95,3 @@
 
 </body>
 </html>
-
-

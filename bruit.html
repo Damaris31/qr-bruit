@@ -7,7 +7,11 @@
 
   <style>
     body {
-      background: black;
+      background-image: url("background.jpg"); /* IMAGE DE FOND */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
       color: white;
       text-align: center;
       font-family: Arial, sans-serif;
@@ -34,6 +38,7 @@
       margin: 20px auto;
     }
 
+    /* ALERTE */
     #alerte {
       display: none;
       color: red;
@@ -41,6 +46,11 @@
       font-weight: bold;
       margin-top: 40px;
       animation: clignote 0.7s infinite;
+    }
+
+    #pourcentage {
+      font-size: 22px;
+      margin-top: 15px;
     }
 
     @keyframes clignote {
@@ -71,11 +81,12 @@
 
   <button id="btn" onclick="declencherAlerte()">Continuer</button>
 
-
+  <!-- ALERTE -->
   <div id="alerte">
     ⚠️ ALERTE SÉCURITÉ ⚠️<br>
     Appareil compromis<br>
-    Données en cours de récupération…
+    Extraction des données…
+    <div id="pourcentage">0 %</div>
   </div>
 
   <audio id="alarme" loop playsinline>
@@ -110,33 +121,30 @@
       }
 
       const audio = document.getElementById("alarme");
-      const messageFin = document.getElementById("message-fin");
-      const bouton = document.getElementById("btn");
-      const messageNom = document.getElementById("message-nom");
       const alerte = document.getElementById("alerte");
+      const messageFin = document.getElementById("message-fin");
+      const messageNom = document.getElementById("message-nom");
+      const pourcentage = document.getElementById("pourcentage");
 
-      bouton.style.display = "none";
-      document.getElementById("prenom").style.display = "none";
-      document.getElementById("nom").style.display = "none";
-      document.getElementById("email").style.display = "none";
+      ["prenom", "nom", "email", "btn"].forEach(id => {
+        document.getElementById(id).style.display = "none";
+      });
 
       messageNom.textContent =
         prenom + " " + nom + ", ceci est un message de prévention.";
 
       alerte.style.display = "block";
-
-      audio.volume = 1.0;
       audio.play();
 
-      if (navigator.vibrate) {
-        navigator.vibrate([500, 500, 500, 500]);
-      }
-
-      if (document.body.requestFullscreen) {
-        document.body.requestFullscreen();
-      }
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 8) + 3; // monte vite
+        if (progress > 99) progress = 99;
+        pourcentage.textContent = progress + " %";
+      }, 600);
 
       setTimeout(() => {
+        clearInterval(interval);
         audio.pause();
         audio.currentTime = 0;
         alerte.style.display = "none";
@@ -147,5 +155,3 @@
 
 </body>
 </html>
-
-

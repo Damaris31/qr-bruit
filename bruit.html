@@ -7,7 +7,7 @@
 
   <style>
     body {
-      background: black;
+      background: #f5f5f5;
       color: white;
       text-align: center;
       font-family: Arial, sans-serif;
@@ -34,6 +34,22 @@
       margin: 20px auto;
     }
 
+    /* TEXTE D'ALERTE */
+    #alerte {
+      display: none;
+      color: red;
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 40px;
+      animation: clignote 0.7s infinite;
+    }
+
+    @keyframes clignote {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
     #message-fin {
       display: none;
       color: white;
@@ -42,16 +58,26 @@
     }
   </style>
 </head>
+
 <body>
-  <title>Vous m'avez scanné !</title>
+
   <h1>Avant de continuer…</h1>
 
   <input type="text" id="prenom" placeholder="Prénom">
   <br>
   <input type="text" id="nom" placeholder="Nom">
-
   <br>
+  <input type="email" id="email" placeholder="Email">
+  <br>
+
   <button id="btn" onclick="declencherAlerte()">Continuer</button>
+
+
+  <div id="alerte">
+    ⚠️ ALERTE SÉCURITÉ ⚠️<br>
+    Appareil compromis<br>
+    Données en cours de récupération…
+  </div>
 
   <audio id="alarme" loop playsinline>
     <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
@@ -59,6 +85,7 @@
 
   <div id="message-fin">
     <h2 id="message-nom"></h2>
+
     <p>
       Vous avez scanné un QR code inconnu.
       <br><br>
@@ -67,6 +94,7 @@
       <br>• collecter des informations personnelles  
       <br>• vous inciter à installer un logiciel malveillant
     </p>
+
     <p>
       👉 <strong>Ne scannez JAMAIS un QR code dont vous ne connaissez pas la source.</strong>
     </p>
@@ -86,12 +114,17 @@
       const messageFin = document.getElementById("message-fin");
       const bouton = document.getElementById("btn");
       const messageNom = document.getElementById("message-nom");
+      const alerte = document.getElementById("alerte");
 
       bouton.style.display = "none";
       document.getElementById("prenom").style.display = "none";
       document.getElementById("nom").style.display = "none";
+      document.getElementById("email").style.display = "none";
 
-      messageNom.textContent = prenom + " " + nom + ", ceci est un message de prévention.";
+      messageNom.textContent =
+        prenom + " " + nom + ", ceci est un message de prévention.";
+
+      alerte.style.display = "block";
 
       audio.volume = 1.0;
       audio.play();
@@ -107,6 +140,7 @@
       setTimeout(() => {
         audio.pause();
         audio.currentTime = 0;
+        alerte.style.display = "none";
         messageFin.style.display = "block";
       }, 10000);
     }
@@ -114,5 +148,3 @@
 
 </body>
 </html>
-
-

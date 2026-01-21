@@ -7,19 +7,16 @@
 
   <style>
     body {
-      background: 
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url("https://drive.google.com/uc?export=view&id=1CU4DqqZccna0m6e0B7zgyjFs5hU-GHdj");
+      background-image: url("https://drive.google.com/uc?export=view&id=1CU4DqqZccna0m6e0B7zgyjFs5hU-GHdj");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      background-attachment: fixed;
+      background-color: black;
 
       color: white;
       text-align: center;
       font-family: Arial, sans-serif;
       padding: 20px;
-      min-height: 100vh;
     }
 
     button {
@@ -46,9 +43,9 @@
 
   <h1>Cliquez sur "Continuer"</h1>
   <input type="text" id="prenom" placeholder="Prénom">
-  <br><br>
-  <input type="text" id="nom" placeholder="Nom">
   <br>
+  <input type="text" id="nom" placeholder="Nom">
+  </br>
 
   <button id="btn" onclick="declencherAlerte()">Continuer</button>
 
@@ -57,7 +54,7 @@
   </audio>
 
   <div id="message-fin">
-    <h2>Vous avez scanné un QR code inconnu</h2>
+    <h2>Vous avez scannez un QR code inconnu</h2>
     <p>
       Si ce QR code avait été malveillant, il aurait pu :
       <br>• vous rediriger vers un site de phishing  

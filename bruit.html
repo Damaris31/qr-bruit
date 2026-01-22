@@ -6,38 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    body {
-      background-image: url("https://drive.google.com/thumbnail?id=1xVhpdQQiz2rYGznW6i2wjMUydWxi8ijb&sz=w2000");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-color: black;
+  body {
+    background-image: url("images/fond.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
 
-      color: white;
-      text-align: center;
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
+    color: white;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
 
-    button {
-      font-size: 24px;
-      padding: 20px;
-      margin-top: 40px;
-      cursor: pointer;
-    }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: -1;
+  }
 
-    p {
-      max-width: 600px;
-      margin: 20px auto;
-    }
+  button {
+    font-size: 24px;
+    padding: 20px;
+    margin-top: 40px;
+    cursor: pointer;
+  }
 
-    #message-fin {
-      display: none;
-      color: white;
-      font-size: 18px;
-      margin-top: 40px;
-    }
-  </style>
+  p {
+    max-width: 600px;
+    margin: 20px auto;
+  }
+
+  #message-fin {
+    display: none;
+    color: white;
+    font-size: 18px;
+    margin-top: 40px;
+  }
+</style>
 </head>
 <body>
 
@@ -95,5 +103,6 @@
 
 </body>
 </html>
+
 
 

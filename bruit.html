@@ -6,63 +6,109 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-  body {
-    background-image: url("images/fond.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: black;
+    body {
+      position: relative;
+      background-image: url("images/fond.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: black;
 
-    color: white;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    padding: 20px;
-  }
+      color: white;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
 
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: -1;
-  }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 0;
+    }
 
-  button {
-    font-size: 24px;
-    padding: 20px;
-    margin-top: 40px;
-    cursor: pointer;
-  }
+    body > * {
+      position: relative;
+      z-index: 1;
+    }
 
-  p {
-    max-width: 600px;
-    margin: 20px auto;
-  }
+    button {
+      font-size: 24px;
+      padding: 20px;
+      margin-top: 40px;
+      cursor: pointer;
+    }
 
-  #message-fin {
-    display: none;
-    color: white;
-    font-size: 18px;
-    margin-top: 40px;
-  }
-</style>
+    input {
+      font-size: 18px;
+      padding: 10px;
+      margin: 8px 0;
+      width: 250px;
+    }
+
+    p {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    /* ALERTE PENDANT LE SCAN */
+    #alerte-scan {
+      display: none;
+      margin-top: 40px;
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      animation: clignote 1s infinite;
+    }
+
+    #pourcentage {
+      font-size: 36px;
+      margin-top: 20px;
+    }
+
+    @keyframes clignote {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    /* MESSAGE FINAL */
+    #message-fin {
+      display: none;
+      color: white;
+      font-size: 18px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
 
   <h1>Cliquez sur "Continuer"</h1>
 
-  <input type="text" id="prenom" placeholder="Prénom"><br>
-  <input type="text" id="nom" placeholder="Nom"><br>
-  <input type="email" id="email" placeholder="Email"><br>
+  <!-- FORMULAIRE -->
+  <div id="formulaire">
+    <input type="text" id="prenom" placeholder="Prénom"><br>
+    <input type="text" id="nom" placeholder="Nom"><br>
+    <input type="email" id="email" placeholder="Email"><br>
+  </div>
 
   <button id="btn" onclick="declencherAlerte()">Continuer</button>
+
+  <!-- ALERTE SCAN -->
+  <div id="alerte-scan">
+    <p>🚨 ALERTE : téléphone compromis</p>
+    <p>Données en cours de téléchargement…</p>
+    <p id="pourcentage">0%</p>
+  </div>
 
   <audio id="alarme" loop playsinline>
     <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
   </audio>
 
+  <!-- MESSAGE FINAL -->
   <div id="message-fin">
-    <h2>Vous avez scanné un QR code inconnu</h2>
+    <h2 id="titre-fin"></h2>
     <p>
       Si ce QR code avait été malveillant, il aurait pu :
       <br>• vous rediriger vers un site de phishing  
@@ -80,22 +126,54 @@
       const audio = document.getElementById("alarme");
       const messageFin = document.getElementById("message-fin");
       const bouton = document.getElementById("btn");
+      const formulaire = document.getElementById("formulaire");
+      const alerteScan = document.getElementById("alerte-scan");
+      const pourcentageEl = document.getElementById("pourcentage");
 
+      const prenom = document.getElementById("prenom").value || "Visiteur";
+      const nom = document.getElementById("nom").value || "";
+
+      // Cacher formulaire et bouton
+      formulaire.style.display = "none";
       bouton.style.display = "none";
 
+      // Afficher l’alerte
+      alerteScan.style.display = "block";
+
+      // Lancer l’alarme
       audio.play();
 
       if (navigator.vibrate) {
         navigator.vibrate([500, 500, 500, 500]);
       }
 
-      if (document.body.requestFullscreen) {
+      if (document.body.requestFullscreen && window.innerWidth < 768) {
         document.body.requestFullscreen();
       }
 
+      // Pourcentage progressif
+      let pourcentage = 0;
+      const interval = setInterval(() => {
+        pourcentage += Math.floor(Math.random() * 8) + 4; // 4 à 11 %
+
+        if (pourcentage >= 100) {
+          pourcentage = 100;
+          clearInterval(interval);
+        }
+
+        pourcentageEl.innerText = pourcentage + "%";
+      }, 500);
+
+      // Fin de l’alerte
       setTimeout(() => {
         audio.pause();
         audio.currentTime = 0;
+
+        alerteScan.style.display = "none";
+
+        document.getElementById("titre-fin").innerText =
+          `⚠️ ${prenom} ${nom}, vous avez scanné un QR code inconnu`;
+
         messageFin.style.display = "block";
       }, 10000);
     }
@@ -103,6 +181,3 @@
 
 </body>
 </html>
-
-
-

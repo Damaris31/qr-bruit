@@ -123,16 +123,30 @@
 
   <script>
     function declencherAlerte() {
+      const prenomInput = document.getElementById("prenom");
+      const nomInput = document.getElementById("nom");
+      const emailInput = document.getElementById("email");
       const audio = document.getElementById("alarme");
       const messageFin = document.getElementById("message-fin");
       const bouton = document.getElementById("btn");
       const formulaire = document.getElementById("formulaire");
       const alerteScan = document.getElementById("alerte-scan");
       const pourcentageEl = document.getElementById("pourcentage");
+  
+      const prenom = prenomInput.value.trim();
+      const nom = nomInput.value.trim();
+      const email = emailInput.value.trim();
+      
+      // Vérification des champs
+      if (!prenom || !nom || !email) {
+        alert("⚠️ Veuillez remplir le prénom, le nom et l’email avant de continuer.");
+        return;
+     }   
+      
+      document.body.style.overflow = "hidden";
+  
 
-      const prenom = document.getElementById("prenom").value || "Visiteur";
-      const nom = document.getElementById("nom").value || "";
-
+      
       // Cacher formulaire et bouton
       formulaire.style.display = "none";
       bouton.style.display = "none";
@@ -148,7 +162,8 @@
       }
 
       if (document.body.requestFullscreen && window.innerWidth < 768) {
-        document.body.requestFullscreen();
+        document.body.requestFullscreen().catch(() => {});
+
       }
 
       // Pourcentage progressif
@@ -168,11 +183,14 @@
       setTimeout(() => {
         audio.pause();
         audio.currentTime = 0;
+        document.body.style.overflow = "";
+
 
         alerteScan.style.display = "none";
 
-        document.getElementById("titre-fin").innerText =
-          `⚠️ ${prenom} ${nom}, vous avez scanné un QR code inconnu`;
+       document.getElementById("titre-fin").innerText =
+        `⚠️ ${prenom} ${nom}, Ceci est un exercice de cybersécurité pour vous sensibiliser à ne pas scanner un QRcode inconnu à l'avenir`;
+
 
         messageFin.style.display = "block";
       }, 10000);
@@ -181,3 +199,4 @@
 
 </body>
 </html>
+
